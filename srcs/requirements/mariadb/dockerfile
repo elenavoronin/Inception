@@ -1,0 +1,9 @@
+FROM debian:bullseye
+
+RUN mkdir -p ../../data/mariadb_data \
+    && chown -R mysql:mysql ../../data/mariadb_data
+
+COPY ./conf/my.cnf /etc/mysql/my.cnf
+COPY ../tools/setup.sql /docker-entrypoint-initdb.d/
+
+CMD ["bash script"]

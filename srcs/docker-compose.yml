@@ -1,19 +1,36 @@
 services:
   mariadb:
-    image: mariadb:10.5
-           environment:.env
-    ports:
-      - "${MYSQL_PORT}:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-
-  wordpress:
-    image: wordpress:php7.4-fpm
+    build: ./requirements/mariadb
+    container_name: mariadb
+    restart: always
     environment: .env
     volumes:
-      - wordpress_data:/var/www/html
+      - ../data/mariadb_data
+    networks:
+      - inception_network
+
+  wordpress:
+    build:
+    environment: .env
+    volumes:
+      - ../data/wordpress_data
+    networks:
+      - inception_network
 
   nginx:
-    image: nginx:alpine
+    build:
     ports:
       - "${NGINX_PORT}:443"
+    volumes:
+      - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - inception_network
+
+
+# volumes:
+#   mariadb_data:
+#   wordpress_data:
+
+
+#networks:
+#  inception_network:
