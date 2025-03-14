@@ -1,0 +1,19 @@
+services:
+  mariadb:
+    image: mariadb:10.5
+           environment:.env
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:php7.4-fpm
+    environment: .env
+    volumes:
+      - wordpress_data:/var/www/html
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "${NGINX_PORT}:443"
