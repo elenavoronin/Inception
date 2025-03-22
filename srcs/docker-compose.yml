@@ -29,11 +29,11 @@ services:
 
 volumes:
   mariadb_data:
-    name: mariadb_data
+    mount: /home/evoronin/data/db
   wordpress_data:
-    name: wordpress_data
+    mount: /home/evoronin/data/wp
   nginx_data:
-    name: nginx_data
+    mount: /home/evoronin/data/nginx
 
 
 networks:

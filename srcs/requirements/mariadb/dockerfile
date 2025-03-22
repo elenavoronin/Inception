@@ -18,7 +18,7 @@ RUN chmod +x /usr/local/bin/mariadb.sh
 
 EXPOSE 3306
 
-ENTRYPOINT ["./tools/mariadb.sh"]
+ENTRYPOINT ["mariadb.sh"]
 
 # Start MariaDB
 CMD ["mysqld"]
