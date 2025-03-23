@@ -3,38 +3,53 @@ services:
     build: ./requirements/mariadb
     container_name: mariadb
     restart: always
-    environment: .env
+    env_file: 
+      - ../.env
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
       - inception_network
 
-  wordpress:
-    build:
-    environment: .env
-    volumes:
-      - wordpress_data:/var/www/html
-    networks:
-      - inception_network
+  # wordpress:
+  #   build: ./requirements/wordpress
+  #   env_file: 
+  #     - ../.env
+  #   volumes:
+  #     - wordpress_data:/var/www/html
+  #   networks:
+  #     - inception_network
 
-  nginx:
-    build:
-    ports:
-      - "${NGINX_PORT}:443"
-    volumes:
-      - nginx_data:/etc/nginx
-    networks:
-      - inception_network
+  # nginx:
+  #   build:
+  #     context: ./requirements/nginx
+  #   env_file:
+  #     - ../.env
+  #   volumes:
+  #     - nginx_data:/etc/nginx
+  #   networks:
+  #     - inception_network
 
 
 volumes:
   mariadb_data:
-    mount: /home/evoronin/data/db
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/evoronin/data/db
+      o: bind
   wordpress_data:
-    mount: /home/evoronin/data/wp
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/evoronin/data/wp
+      o: bind
   nginx_data:
-    mount: /home/evoronin/data/nginx
-
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/evoronin/data/nginx
+      o: bind
 
 networks:
  inception_network:
+  driver: bridge
