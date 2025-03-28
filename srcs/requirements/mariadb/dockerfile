@@ -6,6 +6,9 @@ RUN apt-get update && apt-get install -y mariadb-server mariadb-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Ensure MariaDB runs correctly with the right data directory
+RUN mkdir -p /usr/local/bin/ \
+&& chown -R mysql:mysql /usr/local/bin/
+
 RUN mkdir -p /var/lib/mysql \
     && chown -R mysql:mysql /var/lib/mysql
 
@@ -18,7 +21,7 @@ RUN  chmod +x /usr/local/bin/mariadb.sh
 
 EXPOSE 3306
 
-ENTRYPOINT ["/mariadb.sh"]
+ENTRYPOINT ["/usr/local/bin/mariadb.sh"]
 
 # Start MariaDB
 CMD ["mysqld"]
