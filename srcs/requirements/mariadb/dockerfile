@@ -2,8 +2,8 @@
 FROM debian:bullseye
 
 # Install MariaDB server
-RUN apt-get update && apt-get install -y mariadb-server mariadb-client \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y mariadb-server mariadb-client gettext \
+    && rm -rf /var/lib/apt/lists/* 
 
 # Ensure MariaDB runs correctly with the right data directory
 RUN mkdir -p /usr/local/bin/ \
