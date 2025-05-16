@@ -1,34 +1,21 @@
 #!/bin/bash
-
-# Exit on error
-set -e
-
-# load .env variables
-set -o allexport
-source /docker-entrypoint-initdb.d/.env
-set +o allexport
+scripts
 
 echo "Starting MariaDB setup..."
 
 
-service mysql start
+service mariadb start
 
 # Initialize database if not already initialized
-if [ ! -f "/var/lib/mysql/ibdata1" ]; then
+if [ ! -f "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
     echo "Initializing database..." 
-    mysqld --initialize-insecure --user=mysql
-    sleep 5
-    mysqld_safe --skip-networking
+    sleep 2
+    mysql < /docker-entrypoint-initdb.d/setup.sql
 
 fi
 
-# Run any custom SQL setup scripts
-if [ -f "/docker-entrypoint-initdb.d/setup.sql" ]; then
-    echo "Running setup.sql..."
-    mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" < /docker-entrypoint-initdb.d/setup.sql
-    mysqladmin -uroot shutdown
-fi
 
+service mariadb stop
 
 # Start MariaDB in the background
-exec mysqld_safe
+exec mysqld_safe    
