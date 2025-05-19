@@ -21,15 +21,16 @@ services:
     networks:
       - inception_network
 
-  # nginx:
-  #   build:
-  #     context: ./requirements/nginx
-  #   env_file:
-  #     - ../.env
-  #   volumes:
-  #     - nginx_data:/etc/nginx
-  #   networks:
-  #     - inception_network
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    restart: always
+    ports: 
+      - 443:443
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - inception_network
 
 
 volumes:
@@ -44,12 +45,6 @@ volumes:
     driver_opts:
       type: none
       device: /home/evoronin/data/wp
-      o: bind
-  nginx_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/evoronin/data/nginx
       o: bind
 
 networks:
