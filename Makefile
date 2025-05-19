@@ -51,5 +51,5 @@ help:
 	@echo "  make down      - Stop and remove containers"
 	@echo "  make logs      - View logs of the services"
 	@echo "  make clean     - Clean up unused images and volumes"
-	@echo "  make restart    - Restart the containers"
+	@echo "  make restart   - Restart the containers"
 	@echo "  make help      - Show this help message"
