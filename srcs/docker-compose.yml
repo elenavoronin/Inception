@@ -3,6 +3,7 @@ services:
     build: ./requirements/mariadb
     container_name: mariadb
     restart: always
+    image: mariadb
     env_file: 
       - ../.env
     volumes:
@@ -14,6 +15,7 @@ services:
     build: ./requirements/wordpress
     container_name: wordpress
     restart: always
+    image: wordpress
     env_file: 
       - ../.env
     volumes:
@@ -25,6 +27,7 @@ services:
     build: ./requirements/nginx
     container_name: nginx
     restart: always
+    image: nginx
     ports: 
       - 443:443
     volumes:
